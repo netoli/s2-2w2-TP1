@@ -10,6 +10,55 @@ let leBoutonBurger = document.querySelector("#bouton-menu-burger");
 let leBody = document.querySelector("body");
 let lesMenus = document.querySelectorAll(".navigation .menu");
 
+// =========================================================================
+// Toggle dark / light mode — persistance localStorage + respect du système
+// =========================================================================
+const themeToggle = document.querySelector("#theme-toggle");
+const themeIcon = themeToggle ? themeToggle.querySelector(".theme-toggle-icon") : null;
+const STORAGE_KEY = "theme-preference";
+
+function appliquerTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    if (themeIcon) {
+        themeIcon.textContent = theme === "light" ? "light_mode" : "dark_mode";
+    }
+    if (themeToggle) {
+        themeToggle.setAttribute("aria-pressed", String(theme === "light"));
+    }
+}
+
+function chargerTheme() {
+    let stored = null;
+    try {
+        stored = localStorage.getItem(STORAGE_KEY);
+    } catch (_) {
+        // localStorage indisponible (mode privé strict) — on ignore
+    }
+    if (stored === "light" || stored === "dark") {
+        appliquerTheme(stored);
+        return;
+    }
+    // Pas de préférence enregistrée → respecter le système
+    const prefereClair = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+    appliquerTheme(prefereClair ? "light" : "dark");
+}
+
+function basculerTheme() {
+    const courant = document.documentElement.getAttribute("data-theme") || "dark";
+    const nouveau = courant === "light" ? "dark" : "light";
+    appliquerTheme(nouveau);
+    try {
+        localStorage.setItem(STORAGE_KEY, nouveau);
+    } catch (_) {
+        // ignore
+    }
+}
+
+chargerTheme();
+if (themeToggle) {
+    themeToggle.addEventListener("click", basculerTheme);
+}
+
 // Ajout des écouteurs d'événement
 document.addEventListener("scroll", animationDefilement);
 leBoutonBurger.addEventListener("click", empecherLeDefilement);
