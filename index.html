@@ -3,67 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TP1</title>
+    <meta name="description" content="Portfolio d'Olivier Vernet — étudiant en Technique d'intégration multimédia au Collège de Maisonneuve. Animations CSS, parcours académique, réalisations.">
+    <meta name="author" content="Olivier Vernet">
+    <meta name="theme-color" content="#000000">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Portfolio · Olivier Vernet — Intégrateur multimédia">
+    <meta property="og:description" content="Animations CSS, JavaScript et parcours TIM. Démo TP2 — Animation avec CSS & JavaScript.">
+    <meta property="og:url" content="https://netoli.github.io/s2-2w2-TP1/">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://netoli.github.io/s2-2w2-TP1/">
+    <title>Portfolio · Olivier Vernet — Intégrateur multimédia (TP2 Animation CSS/JS)</title>
 
-    <!-- ============================== LIENS VERS DOSSIER CSS POUR LE STYLE DE LA PAGE ============================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined|Material+Icons|Material+Icons+Outlined">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Boldonse&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Rammetto+One&family=Teko:wght@300..700&display=swap">
+
     <link rel="stylesheet" href="assets/css/index.css">
 
-    <!-- ============================== LIENS GOOGLE FONT ET ICONES POUR LES TYPOGRAPHIES ET LES ICONES ============================== -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined|Material+Icons|Material+Icons+Outlined"/>
-    <link href="https://fonts.googleapis.com/css2?family=Boldonse&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Rammetto+One&family=Teko:wght@300..700&display=swap" rel="stylesheet">
-
-    <!-- ============================== SCRIPT JAVASCRIPT ============================== -->
     <script src="assets/js/index.js" defer></script>
 </head>
 
 <body>
-    <!-- Cet input permet d'afficher ou de cache le menu de navigation de la page en format mobile -->
-    <input type="checkbox" id="bouton-menu-burger" class="bouton-burger">
+    <a class="skip-link" href="#moi">Aller au contenu principal</a>
+
+    <!-- Bascule du menu burger en format mobile (CSS-only via checkbox hack, JS gère le scroll-lock) -->
+    <input type="checkbox" id="bouton-menu-burger" class="bouton-burger" aria-hidden="true">
     <header>
         <div class="profil">
             <picture class="photo-profil">
                 <source media="(min-width: 992px)" srcset="assets/images/header-main/img3.jpg">
                 <source media="(min-width: 576px)" srcset="assets/images/header-main/img2.jpg">
-                <img src="assets/images/header-main/img1.jpg" alt="Une photo de moi">
+                <img src="assets/images/header-main/img1.jpg" alt="Portrait d'Olivier Vernet" loading="eager">
             </picture>
             <div class="nom-et-fonction">
-                <h2 class="mon-nom">OLIVIER VERNET</h2>
-                <h3 class="mon-titre">Intégrateur Multimédias</h3>
+                <p class="mon-nom">OLIVIER VERNET</p>
+                <p class="mon-titre">Intégrateur multimédia</p>
             </div>
         </div>
 
         <div class="barre-navigation">
-            <nav class="navigation">
+            <nav class="navigation" aria-label="Navigation principale">
                 <a class="menu menu1" href="#moi">Moi</a>
                 <a class="menu menu2" href="#formations">Formations</a>
                 <a class="menu menu3" href="#realisations">Réalisations</a>
 
-                <div class="contact">
-                    <h2 class="coordonnees">
-                        <span class="material-icons telephone">smartphone</span>
-                        514-207-2249
-                    </h2>
-                    <h2 class="coordonnees">
-                        <span class="material-icons courriel">email</span>
-                        olivier_vernet@yahoo.ca
-                    </h2>
-                    <h2 class="coordonnees"><span class="material-icons liens">link</span>
-
-                    </h2>
-                    <h2 class="coordonnees"><span class="material-icons liens">link</span>
-
-                    </h2>
-                    <h2 class="coordonnees"><span class="material-icons liens">link</span>
-
-                    </h2>
-                </div>
+                <ul class="contact" aria-label="Coordonnées">
+                    <li class="coordonnees">
+                        <span class="material-icons telephone" aria-hidden="true">smartphone</span>
+                        <a href="tel:+15142072249">514-207-2249</a>
+                    </li>
+                    <li class="coordonnees">
+                        <span class="material-icons courriel" aria-hidden="true">email</span>
+                        <a href="mailto:olivier_vernet@yahoo.ca">olivier_vernet@yahoo.ca</a>
+                    </li>
+                    <li class="coordonnees">
+                        <span class="material-icons liens" aria-hidden="true">link</span>
+                        <a href="https://github.com/netoli" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    </li>
+                    <li class="coordonnees">
+                        <span class="material-icons liens" aria-hidden="true">link</span>
+                        <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    </li>
+                </ul>
             </nav>
 
-            <label for="bouton-menu-burger" class="bouton">
-                <div class="ligne ligne1"></div>
-                <div class="ligne ligne2"></div>
-                <div class="ligne ligne3"></div>
-                <div class="ligne ligne4"></div>
+            <label for="bouton-menu-burger" class="bouton" aria-label="Ouvrir ou fermer le menu de navigation" role="button" tabindex="0">
+                <div class="ligne ligne1" aria-hidden="true"></div>
+                <div class="ligne ligne2" aria-hidden="true"></div>
+                <div class="ligne ligne3" aria-hidden="true"></div>
+                <div class="ligne ligne4" aria-hidden="true"></div>
             </label>
         </div>
     </header>
@@ -87,47 +96,47 @@
             </span>
         </section>
 
-        <!-- ============================== SECTION CONTENANT UNE COURTE DESCRIPTION DE MOI ============================== -->
-        <section id="moi">
-            <div class="forme rectangle1">
+        <!-- ============================== SECTION : COURTE DESCRIPTION DE MOI ============================== -->
+        <section id="moi" aria-labelledby="titre-moi">
+            <div class="forme rectangle1" aria-hidden="true">
                 <div class="text-moi">
                     <div>M</div>
                     <div>O</div>
                     <div>I</div>
                 </div>
             </div>
+            <h2 id="titre-moi" class="visually-hidden">Moi</h2>
             <div class="description">
                 <div class="photo-moi">
                     <picture class="photo">
                         <source media="(min-width: 992px)" srcset="assets/images/header-main/img3.jpg">
                         <source media="(min-width: 576px)" srcset="assets/images/header-main/img2.jpg">
-                        <img src="assets/images/header-main/img1.jpg" alt="">
+                        <img src="assets/images/header-main/img1.jpg" alt="" loading="lazy">
                     </picture>
                 </div>
 
-                <!-- Cet input permet d'afficher ou de cacher la description-moi -->
-                <input type="checkbox" id="reste-texte" name="reste"/>
+                <!-- Bascule de la description longue (CSS-only via checkbox hack) -->
+                <input type="checkbox" id="reste-texte" name="reste" aria-hidden="true">
 
                 <div class="description-moi">
-                    <h3>Je suis Oivier Vernet. J'ai 31 ans. Je vais avoir 14 ans au Canada dans quelques semaines. Je suis marié depuis 2 ans maintenant. 
-                        En essayant de trouver ma voie, j'ai eu un parcous académique en montagne russe. J'ai fait 5 sessions en Soins infirmiers, mais, pour des différentes raisons, je n'ai pas pu terminer. 
-                        J'ai un DEP en Pose de système intérieur dans la construction. J'ai une attestation en gestion d'entreprise. 
-                        Maintenant, je pense que j'ai enfin trouvé ma voie en faisant une Technique d'intégration multimédias, mais l'annéee dernière ce n'était pas facile pour moi puisque, dans mon pays (Haïti), 
-                        des bandits avaient enlevé et tué des membres de ma famille qui sont encore là-bas. 
-                        Toutes ces épreuves me rendent plus fort et plus conscient de la chance que j'ai...
-                    </h3>
+                    <p>Je suis Olivier Vernet. J'ai 31 ans. Je vais avoir 14 ans au Canada dans quelques semaines. Je suis marié depuis 2 ans maintenant.
+                        En essayant de trouver ma voie, j'ai eu un parcours académique en montagne russe. J'ai fait 5 sessions en Soins infirmiers, mais pour différentes raisons je n'ai pas pu terminer.
+                        J'ai un DEP en Pose de système intérieur dans la construction. J'ai une attestation en gestion d'entreprise.
+                        Maintenant, je pense que j'ai enfin trouvé ma voie en faisant une Technique d'intégration multimédia. L'année dernière n'a pas été facile pour moi&nbsp;: dans mon pays (Haïti), des bandits ont enlevé et tué des membres de ma famille qui sont encore là-bas.
+                        Toutes ces épreuves me rendent plus fort et plus conscient de la chance que j'ai…
+                    </p>
                 </div>
-                <label class="btn-voir" for="reste-texte">
-                    <h3 class="btn-mot-voir">Voir</h3>
-                    <span class="material-icons aggrandir">add</span>
+                <label class="btn-voir" for="reste-texte" role="button" tabindex="0" aria-controls="reste-texte">
+                    <span class="btn-mot-voir">Voir plus</span>
+                    <span class="material-icons aggrandir" aria-hidden="true">add</span>
                 </label>
             </div>
         </section>
 
-        <!-- ============================== SECTION CONTENANT MON PARCOURS ACADÉMIQUE ============================== -->
-        <section id="formations">
-            <div class="forme rectangle2">
-                <!-- Ici, chaque lettre se trouve dans un div afin de permettre d'appliquer l'effet 3D sur chaque lettre et non sur le mot en un seul bloc -->
+        <!-- ============================== SECTION : PARCOURS ACADÉMIQUE ============================== -->
+        <section id="formations" aria-labelledby="titre-formations">
+            <div class="forme rectangle2" aria-hidden="true">
+                <!-- Une lettre par <div> pour appliquer l'effet 3D individuellement -->
                 <div class="text-formations">
                     <div>F</div>
                     <div>O</div>
@@ -141,79 +150,80 @@
                     <div>S</div>
                 </div>
             </div>
+            <h2 id="titre-formations" class="visually-hidden">Formations</h2>
             <div class="mescours">
-                <!-- Ce sont les inputs qui permettent d'afficher ou de cacher la description d'un cours en fonction du cours sélectionné -->
-                <input type="radio" id="afficher-description1" name="description-cachee" checked/> <!-- Ici, cet attribut checked permet de déterminer l'état de cocher par défaut de cet élément  -->
-                <input type="radio" id="afficher-description2" name="description-cachee"/>
-                <input type="radio" id="afficher-description3" name="description-cachee"/>
-                <input type="radio" id="afficher-description4" name="description-cachee"/>
+                <!-- Radios CSS-only : sélectionner un cours affiche sa description (cf. ~ in CSS) -->
+                <input type="radio" id="afficher-description1" name="description-cachee" checked aria-hidden="true">
+                <input type="radio" id="afficher-description2" name="description-cachee" aria-hidden="true">
+                <input type="radio" id="afficher-description3" name="description-cachee" aria-hidden="true">
+                <input type="radio" id="afficher-description4" name="description-cachee" aria-hidden="true">
 
-                <div class="ensemble-cours">
-                    <div class="cours cours1">
-                        <h3 class="nom-cours">Technique d'intégration multimédias</h3>
-                        <label class="voir-description" for="afficher-description1">
-                            <h3 class="mot-voir">Voir</h3>
-                            <span class="material-icons ouvrir">chevron_right</span>
+                <ul class="ensemble-cours" role="tablist" aria-label="Mes formations">
+                    <li class="cours cours1">
+                        <h3 class="nom-cours">Technique d'intégration multimédia</h3>
+                        <label class="voir-description" for="afficher-description1" role="tab" tabindex="0">
+                            <span class="mot-voir">Voir</span>
+                            <span class="material-icons ouvrir" aria-hidden="true">chevron_right</span>
                         </label>
-                    </div>
+                    </li>
 
-                    <div class="cours cours2">
+                    <li class="cours cours2">
                         <h3 class="nom-cours">Pose de système intérieur</h3>
-                        <label class="voir-description" for="afficher-description2">
-                            <h3 class="mot-voir">Voir</h3>
-                            <span class="material-icons ouvrir">chevron_right</span>
+                        <label class="voir-description" for="afficher-description2" role="tab" tabindex="0">
+                            <span class="mot-voir">Voir</span>
+                            <span class="material-icons ouvrir" aria-hidden="true">chevron_right</span>
                         </label>
-                    </div>
+                    </li>
 
-                    <div class="cours cours3">
+                    <li class="cours cours3">
                         <h3 class="nom-cours">Gestion d'entreprise</h3>
-                        <label class="voir-description" for="afficher-description3">
-                            <h3 class="mot-voir">Voir</h3>
-                            <span class="material-icons ouvrir">chevron_right</span>
+                        <label class="voir-description" for="afficher-description3" role="tab" tabindex="0">
+                            <span class="mot-voir">Voir</span>
+                            <span class="material-icons ouvrir" aria-hidden="true">chevron_right</span>
                         </label>
-                    </div>
+                    </li>
 
-                    <div class="cours cours4">
+                    <li class="cours cours4">
                         <h3 class="nom-cours">Soins infirmiers</h3>
-                        <label class="voir-description" for="afficher-description4">
-                            <h3 class="mot-voir">Voir</h3>
-                            <span class="material-icons ouvrir">chevron_right</span>
+                        <label class="voir-description" for="afficher-description4" role="tab" tabindex="0">
+                            <span class="mot-voir">Voir</span>
+                            <span class="material-icons ouvrir" aria-hidden="true">chevron_right</span>
                         </label>
-                    </div>
-                </div>
+                    </li>
+                </ul>
                 <div class="ensemble-def">
-                    <div class="description-cours description-cours1">
-                        <h3>"L'intégratrice multimédia ou l'intégrateur multimédia intervient tout au long du processus de production des applications multimédias. 
-                        Son travail consiste principalement à assembler et à intégrer les éléments de contenus (textes, images, animations, vidéo, son) d'applications multimédias en ligne ou sur support et à procéder au codage de l'interactivité."
-                        </h3>
+                    <div class="description-cours description-cours1" role="tabpanel">
+                        <p>«&nbsp;L'intégratrice multimédia ou l'intégrateur multimédia intervient tout au long du processus de production des applications multimédias.
+                        Son travail consiste principalement à assembler et à intégrer les éléments de contenus (textes, images, animations, vidéo, son) d'applications multimédias en ligne ou sur support et à procéder au codage de l'interactivité.&nbsp;»
+                        </p>
                     </div>
 
-                    <div class="description-cours description-cours2">
-                        <h3>
-                            Durant la formation, vous apprendrez comment préparer, assembler et poser le matériel servant à l’installation et au montage de plafonds suspendus. 
-                            Vous verrez aussi comment poser des lattes, des carreaux acoustiques, des feuilles de gypse ainsi que des éléments métalliques servant à l’érection de murs et cloisons.
-                        </h3>
+                    <div class="description-cours description-cours2" role="tabpanel">
+                        <p>
+                            Durant la formation, vous apprendrez comment préparer, assembler et poser le matériel servant à l'installation et au montage de plafonds suspendus.
+                            Vous verrez aussi comment poser des lattes, des carreaux acoustiques, des feuilles de gypse ainsi que des éléments métalliques servant à l'érection de murs et cloisons.
+                        </p>
                     </div>
 
-                    <div class="description-cours description-cours3">
-                        <h3>
-                            La gestion d’une entreprise consiste à identifier les actions de nature à conforter la stratégie, à en piloter la mise en œuvre opérationnelle et, enfin, à en contrôler les résultats. 
-                            Dit autrement, la gestion d’entreprise vise à rationaliser ainsi qu’à planifier la prise de décision opérationnelle, tout en optimisant l’utilisation des ressources, la cohésion des métiers et le développement de l’entreprise.
-                        </h3>
+                    <div class="description-cours description-cours3" role="tabpanel">
+                        <p>
+                            La gestion d'une entreprise consiste à identifier les actions de nature à conforter la stratégie, à en piloter la mise en œuvre opérationnelle et, enfin, à en contrôler les résultats.
+                            Dit autrement, la gestion d'entreprise vise à rationaliser ainsi qu'à planifier la prise de décision opérationnelle, tout en optimisant l'utilisation des ressources, la cohésion des métiers et le développement de l'entreprise.
+                        </p>
                     </div>
 
-                    <div class="description-cours description-cours4">
-                        <h3>
+                    <div class="description-cours description-cours4" role="tabpanel">
+                        <p>
                             Partie intégrante du système de soins de santé, les soins infirmiers consistent dans la promotion de la santé, la prévention de la maladie, les soins aux personnes physiquement et mentalement mal portantes et aux personnes handicapées de tous âges, dans tous les contextes de soins primaires, secondaires et tertiaires, y compris les soins communautaires.
-                        </h3>
+                        </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ============================== SECTION CONTENANT UNE RÉALISATION D'ANIMATION PAR KEYFRAME ============================== -->
-        <section id="realisations">
-            <div class="forme rectangle3">
+        <!-- ============================== SECTION : RÉALISATION D'ANIMATION PAR KEYFRAMES ============================== -->
+        <section id="realisations" aria-labelledby="titre-realisations">
+            <div class="forme rectangle3" aria-hidden="true">
                 <div class="text-realisations">
                     <div>R</div>
                     <div>É</div>
@@ -229,9 +239,10 @@
                     <div>S</div>
                 </div>
             </div>
+            <h2 id="titre-realisations" class="visually-hidden">Réalisations</h2>
             <div class="mesprojets">
-                <div class="projet">
-                    <div class="descarres">
+                <div class="projet" aria-label="Animation CSS — grille de carrés en mouvement (purement décorative)" role="img">
+                    <div class="descarres" aria-hidden="true">
                         <div class="forme-carre">
                             <div class="verticale-h"></div>
                         </div>
@@ -309,11 +320,11 @@
             </div>
         </section>
 
-        <!-- Ici, c'est le bouton qui permet d'aller au haut de la page -->
-        <a href="#" class="material-icons btn-retour-haut">keyboard_double_arrow_up</a>
+        <!-- Bouton « retour en haut » -->
+        <a href="#" class="material-icons btn-retour-haut" aria-label="Retour en haut de la page">keyboard_double_arrow_up</a>
 
-        <!-- Ici, on retrouve l'ensemble des divs pour faire l'animation d'arrière-plan de la page web -->
-        <div id="animation">
+        <!-- Animation d'arrière-plan (80 formes décoratives — purement visuel) -->
+        <div id="animation" aria-hidden="true">
             <div class="carrer carre1"></div>
             <div class="carrer carre2"></div>
             <div class="carrer carre3"></div>
@@ -401,59 +412,60 @@
     </main>
 
     <footer>
-        <section id="partie1">
+        <section id="partie1" aria-label="Pied de page principal">
             <div class="logo">
-                <a href="#">
-                    <img src="assets/images/header-main/logo.png" alt="logo">
+                <a href="#" aria-label="Retour en haut">
+                    <img src="assets/images/header-main/logo.png" alt="" loading="lazy">
                 </a>
             </div>
 
             <div class="rs-infos">
-                <div class="rsociaux">
-                    <a href="#"><img src="assets/images/footer/whatsapp.png" alt="icone de whatsapp"></a>
-                    <a href="#"><img src="assets/images/footer/facebook.png" alt="icone de facebook"></a>
-                    <a href="#"><img src="assets/images/footer/instagram.png" alt="icone d'instagram"></a>
-                </div>
-
-                <div class="infolettre">
-                        <label for="email">S'inscrire à mon infolettre</label>
-                        <input type="email" id="courriel" name="courriel" placeholder="courrielid@example.ca">
-                        <input type="submit" id="btninscrire" value="S'inscrire">
-                </div>
-            </div>
-
-            <div class="reprise-menu">
-                    <h3 class="titre-section">Menu</h3>
-                <ul>
-                    <a class="menu-pied menupied1" href="#moi"><li>Moi</li></a>
-                    <a class="menu-pied menupied2" href="#formations"> <li>Formations</li></a>
-                    <a class="menu-pied menupied3" href="#realisations"><li>Réalisations</li></a>
+                <ul class="rsociaux" aria-label="Réseaux sociaux">
+                    <li><a href="https://wa.me/15142072249" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer"><img src="assets/images/footer/whatsapp.png" alt="" loading="lazy"></a></li>
+                    <li><a href="https://www.facebook.com/" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><img src="assets/images/footer/facebook.png" alt="" loading="lazy"></a></li>
+                    <li><a href="https://www.instagram.com/" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><img src="assets/images/footer/instagram.png" alt="" loading="lazy"></a></li>
                 </ul>
+
+                <form class="infolettre" action="#" method="post" aria-label="Inscription à l'infolettre">
+                    <label for="courriel">S'inscrire à mon infolettre</label>
+                    <input type="email" id="courriel" name="courriel" placeholder="courriel@exemple.ca" autocomplete="email" required>
+                    <input type="submit" id="btninscrire" value="S'inscrire">
+                </form>
             </div>
 
-            <div id="reprises-contact">
-                <h2 class="reprise-coordonnees">
-                    <span class="material-icons telephone-pied">smartphone</span>
-                    514-207-2249
-                </h2>
-                <h2 class="reprise-coordonnees">
-                    <span class="material-icons courriel-pied">email</span>
-                    olivier_vernet@yahoo.ca
-                </h2>
-                <h2 class="reprise-coordonnees"><span class="material-icons liens-pied">link</span>
+            <nav class="reprise-menu" aria-label="Menu du pied de page">
+                <h3 class="titre-section">Menu</h3>
+                <ul>
+                    <li><a class="menu-pied menupied1" href="#moi">Moi</a></li>
+                    <li><a class="menu-pied menupied2" href="#formations">Formations</a></li>
+                    <li><a class="menu-pied menupied3" href="#realisations">Réalisations</a></li>
+                </ul>
+            </nav>
 
-                </h2>
-                <h2 class="reprise-coordonnees"><span class="material-icons liens-pied">link</span>
-
-                </h2>
-            </div>
-            
+            <ul id="reprises-contact" aria-label="Coordonnées">
+                <li class="reprise-coordonnees">
+                    <span class="material-icons telephone-pied" aria-hidden="true">smartphone</span>
+                    <a href="tel:+15142072249">514-207-2249</a>
+                </li>
+                <li class="reprise-coordonnees">
+                    <span class="material-icons courriel-pied" aria-hidden="true">email</span>
+                    <a href="mailto:olivier_vernet@yahoo.ca">olivier_vernet@yahoo.ca</a>
+                </li>
+                <li class="reprise-coordonnees">
+                    <span class="material-icons liens-pied" aria-hidden="true">link</span>
+                    <a href="https://github.com/netoli" target="_blank" rel="noopener noreferrer">GitHub</a>
+                </li>
+                <li class="reprise-coordonnees">
+                    <span class="material-icons liens-pied" aria-hidden="true">link</span>
+                    <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                </li>
+            </ul>
         </section>
 
-        <section id="partie2"></section>
+        <section id="partie2" aria-hidden="true"></section>
 
         <section id="partie3">
-            <h6>Copyright © 2025 Olivier Vernet</h6>
+            <p class="mention-legale">© 2026 Olivier Vernet — Tous droits réservés</p>
         </section>
     </footer>
 </body>
