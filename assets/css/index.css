@@ -857,71 +857,100 @@ footer{
     z-index: -1;
 }
 .carrer, .cercle, .ligne1triangle, .ligne2triangle, .ligne1trapeze, .ligne2trapeze{
-    width: 2rem;
-    height: 2rem;
+    width: 1rem;
+    height: 1rem;
     position: absolute;
+    opacity: .55;
+    will-change: transform, opacity;
 }
 
-/* Les animations par images clées 'changement-taille' et 'changement-couleur' sont communes à tous les animations d'arrière-plan */
+/* Animations communes — durées rallongées + courbes adoucies pour mouvement plus organique */
 @keyframes changement-taille{
-    from{
-        scale: 0.15;
+    0%{
+        scale: 0.2;
     }
     50%{
-        scale: 0.45;
+        scale: 0.7;
     }
-    25%, 75%{
-        scale: 0.75;
-    }
-    to{
-        scale: 1;
-    }
-}
-@keyframes changement-couleur{
-    from{
-        background-color: cadetblue;
-    }
-    50%{
-        background-color: darkorange;
-    }
-    25%, 75%{
-        background-color: darkcyan;
-    }
-    to{
-        background-color: brown;
+    100%{
+        scale: 0.5;
     }
 }
 
-/* Ici, ce sont les classes générales des différents divs sur lesquels on applique les animations par images clées */
+/* Palette unifiée bleu→cyan→violet→ambre — transitions douces sans contraste agressif */
+@keyframes changement-couleur{
+    0%{
+        background-color: #38bdf8;       /* sky-400 */
+    }
+    25%{
+        background-color: #22d3ee;       /* cyan-400 */
+    }
+    50%{
+        background-color: #a78bfa;       /* violet-400 */
+    }
+    75%{
+        background-color: #fbbf24;       /* amber-400 */
+    }
+    100%{
+        background-color: #6366f1;       /* indigo-500 */
+    }
+}
+
+/* Effet de traînée — halos lumineux empilés en filter:drop-shadow (suivent les transformations) */
+.carrer, .cercle, .ligne1triangle, .ligne2triangle, .ligne1trapeze, .ligne2trapeze{
+    filter:
+        blur(6px)
+        drop-shadow(0 0 8px currentColor)
+        drop-shadow(0 0 18px currentColor);
+}
+
 .carrer{
     left: 0;
-    animation: deplacement-carre-horizontal 12s 500ms infinite alternate, modification-forme-carre 6s 500ms infinite alternate, changement-couleur 3s 500ms infinite alternate, changement-taille 6s infinite alternate;
-    filter: blur(12px);
+    animation:
+        deplacement-carre-horizontal 24s 500ms infinite alternate cubic-bezier(.45, .05, .55, .95),
+        modification-forme-carre 14s 500ms infinite alternate ease-in-out,
+        changement-couleur 12s 500ms infinite alternate ease-in-out,
+        changement-taille 14s infinite alternate ease-in-out;
 }
 .cercle{
     right: 0;
-    animation: deplacement-cercle-horizontal 12s 500ms infinite alternate, modification-forme-cercle 6s 500ms infinite alternate, changement-couleur 3s 500ms infinite alternate, changement-taille 6s infinite alternate;
-    filter: blur(12px);
+    animation:
+        deplacement-cercle-horizontal 24s 500ms infinite alternate cubic-bezier(.45, .05, .55, .95),
+        modification-forme-cercle 14s 500ms infinite alternate ease-in-out,
+        changement-couleur 12s 500ms infinite alternate ease-in-out,
+        changement-taille 14s infinite alternate ease-in-out;
 }
 .ligne1triangle{
     top: 0;
-    animation: changement-taille 9s infinite alternate, changement-couleur 3s infinite alternate, modification-forme-triangle 6s infinite alternate, deplacement-vertical-ligne1triangle 18s 500ms infinite alternate;
-    filter: blur(12px);
+    animation:
+        changement-taille 18s infinite alternate ease-in-out,
+        changement-couleur 12s infinite alternate ease-in-out,
+        modification-forme-triangle 14s infinite alternate ease-in-out,
+        deplacement-vertical-ligne1triangle 32s 500ms infinite alternate cubic-bezier(.45, .05, .55, .95);
 }
 .ligne2triangle{
     bottom: 0;
-    animation: changement-taille 9s infinite alternate, changement-couleur 3s infinite alternate, modification-forme-triangle 6s infinite alternate, deplacement-vertical-ligne2triangle 18s 500ms infinite alternate;
-    filter: blur(12px);
+    animation:
+        changement-taille 18s infinite alternate ease-in-out,
+        changement-couleur 12s infinite alternate ease-in-out,
+        modification-forme-triangle 14s infinite alternate ease-in-out,
+        deplacement-vertical-ligne2triangle 32s 500ms infinite alternate cubic-bezier(.45, .05, .55, .95);
 }
 .ligne1trapeze{
     top: 0;
-    animation: changement-taille 9s infinite alternate, modification-forme-trapeze 1s infinite alternate, changement-couleur 3s infinite alternate, deplacement-vertical-ligne1trapeze 18s 500ms infinite alternate;
-    filter: blur(12px);
+    animation:
+        changement-taille 18s infinite alternate ease-in-out,
+        modification-forme-trapeze 4s infinite alternate ease-in-out,
+        changement-couleur 12s infinite alternate ease-in-out,
+        deplacement-vertical-ligne1trapeze 32s 500ms infinite alternate cubic-bezier(.45, .05, .55, .95);
 }
 .ligne2trapeze{
     bottom: 0;
-    animation: changement-taille 9s infinite alternate, modification-forme-trapeze 1s infinite alternate, changement-couleur 3s infinite alternate, deplacement-vertical-ligne2trapeze 18s 500ms infinite alternate;
-    filter: blur(12px);
+    animation:
+        changement-taille 18s infinite alternate ease-in-out,
+        modification-forme-trapeze 4s infinite alternate ease-in-out,
+        changement-couleur 12s infinite alternate ease-in-out,
+        deplacement-vertical-ligne2trapeze 32s 500ms infinite alternate cubic-bezier(.45, .05, .55, .95);
 }
 
 
@@ -994,23 +1023,25 @@ footer{
 
 @keyframes deplacement-carre-horizontal{
     from{
-        transform: translateX(0);
-        animation-timing-function: cubic-bezier(0,.45,1,1);
+        transform: translate(0, 0);
+    }
+    50%{
+        transform: translate(50vw, -1.5vh);
     }
     to{
-        transform: translateX(100vw);
-        animation-timing-function: cubic-bezier(0,.84,.3,.90);
+        transform: translate(100vw, 0);
     }
 }
 
 @keyframes deplacement-cercle-horizontal{
     from{
-        transform: translateX(0);
-        animation-timing-function: cubic-bezier(0,.45,1,1);
+        transform: translate(0, 0);
+    }
+    50%{
+        transform: translate(-50vw, 1.5vh);
     }
     to{
-        transform: translateX(-100vw);
-        animation-timing-function: cubic-bezier(0,.84,.3,.90);
+        transform: translate(-100vw, 0);
     }
 }
 /* Ensemble des carrées*/
