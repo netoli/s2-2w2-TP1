@@ -589,72 +589,33 @@ main{
     object-fit: cover;
 }
 .description-moi{
-    max-height: 10%;
-    margin: 1.5rem auto;
-    max-width: 720px;
-    font-size: clamp(0.85rem, 1.2vw, 1.1rem);
-    overflow: hidden;
-    transition: max-height 500ms;
-    color: var(--c-text);
+    margin: 1.5rem auto 0;
+    max-width: 760px;
+    font-size: clamp(0.95rem, 1.15vw, 1.1rem);
     line-height: 1.8;
     text-align: center;
-    padding: 0 1rem;
+    padding: 1.5rem 1.75rem;
+    /* Fond opaque dédié pour garantir le contraste sur le glass card +
+       l'aurora colorée derrière. La section #moi est déjà semi-transparente,
+       donc on renforce localement le contraste pour le bloc texte. */
+    background: rgba(15, 12, 10, 0.55);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-md);
 }
 .description-moi p,
 .description-moi h3{
-    color: var(--c-text);
+    color: #f8f3ea;
     font-weight: 400;
     font-family: "Josefin Sans", sans-serif;
+    letter-spacing: .15px;
 }
-.btn-voir{
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: .5rem;
-    padding: .85rem 1.75rem;
-    background: linear-gradient(135deg, var(--c-primary), var(--c-accent));
-    border: none;
-    border-radius: 999px;
-    cursor: pointer;
-    color: #ffffff;
-    box-shadow: 0 4px 16px var(--c-primary-glow);
-    transition: transform var(--t-base), box-shadow var(--t-base);
-    margin-top: 1.5rem;
+:root[data-theme="light"] .description-moi{
+    background: rgba(255, 252, 247, 0.7);
+    border-color: var(--c-border-strong);
 }
-.btn-voir:hover{
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px var(--c-primary-glow), 0 0 48px var(--c-accent-glow);
-}
-.btn-voir:active{
-    transform: translateY(0);
-}
-.btn-mot-voir{
-    text-transform: none;
-    font-size: clamp(.9rem, 1.2vw, 1rem);
-    color: #ffffff;
-    transition: color 300ms ease;
-    font-weight: 700;
-    letter-spacing: .5px;
-}
-.btn-voir > .aggrandir{
-    font-size: 1.25rem;
-    transition: rotate 400ms ease;
-    margin: 0;
-    color: #ffffff;
-    filter: none;
-}
-#reste-texte:checked ~ label.btn-voir > .aggrandir{
-    rotate: 135deg;
-    color: #ffffff;
-}
-#reste-texte:checked ~ label.btn-voir > .btn-mot-voir{
-    color: #ffffff;
-}
-#reste-texte:checked ~ label.btn-voir{
-    background: linear-gradient(135deg, var(--c-accent), var(--c-warm));
-}
-#reste-texte:checked ~ .description-moi{
-    max-height: 100%;
+:root[data-theme="light"] .description-moi p,
+:root[data-theme="light"] .description-moi h3{
+    color: var(--c-text);
 }
 .mescours{
     width: 100%;
