@@ -283,24 +283,40 @@ header{
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: clamp(1rem, 2vw, 9rem);
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
     width: 60vw;
-    height: 2.5rem;
+    height: 2.75rem;
     text-decoration: none;
     color: var(--c-text);
     margin: .75rem 1rem;
     background: var(--c-surface-strong);
     border: 1px solid var(--c-border);
-    border-radius: 12px;
+    border-radius: 999px;
+    font-weight: 500;
+    letter-spacing: .5px;
+    position: relative;
+    overflow: hidden;
     translate: 0 -300%;
     opacity: 0;
-    transition: opacity 1s, translate 500ms, background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+    transition: opacity 1s, translate 500ms, color 250ms ease, border-color 250ms ease, transform 250ms ease;
+}
+.menu::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--c-primary), var(--c-accent));
+    opacity: 0;
+    transition: opacity 250ms ease;
+    z-index: -1;
 }
 .menu:hover{
-    color: var(--c-primary);
-    border-color: var(--c-primary);
-    background: rgba(56, 189, 248, 0.08);
-    box-shadow: 0 0 20px var(--c-primary-glow);
+    color: #ffffff;
+    border-color: transparent;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px var(--c-primary-glow), 0 0 32px var(--c-accent-glow);
+}
+.menu:hover::before{
+    opacity: 1;
 }
 
 .contact{
@@ -594,39 +610,47 @@ main{
     align-items: center;
     justify-content: center;
     gap: .5rem;
-    padding: .75rem 1.5rem;
-    background: var(--c-surface-strong);
-    border: 1px solid var(--c-border-strong);
+    padding: .85rem 1.75rem;
+    background: linear-gradient(135deg, var(--c-primary), var(--c-accent));
+    border: none;
     border-radius: 999px;
     cursor: pointer;
-    transition: all var(--t-base);
+    color: #ffffff;
+    box-shadow: 0 4px 16px var(--c-primary-glow);
+    transition: transform var(--t-base), box-shadow var(--t-base);
+    margin-top: 1.5rem;
 }
 .btn-voir:hover{
-    border-color: var(--c-primary);
-    background: rgba(56, 189, 248, 0.08);
-    box-shadow: 0 0 24px var(--c-primary-glow);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px var(--c-primary-glow), 0 0 48px var(--c-accent-glow);
+}
+.btn-voir:active{
+    transform: translateY(0);
 }
 .btn-mot-voir{
-    text-transform: full-width;
-    font-size: clamp(.9rem, 1.3vw, 2rem);
-    color: var(--c-primary);
-    transition: scale 500ms, text-transform 500ms, color 500ms;
-    font-weight: 600;
+    text-transform: none;
+    font-size: clamp(.9rem, 1.2vw, 1rem);
+    color: #ffffff;
+    transition: color 300ms ease;
+    font-weight: 700;
     letter-spacing: .5px;
 }
 .btn-voir > .aggrandir{
-    font-size: 1.4rem;
-    transition: rotate 500ms, font-size 500ms;
+    font-size: 1.25rem;
+    transition: rotate 400ms ease;
     margin: 0;
-    color: var(--c-primary);
-    filter: drop-shadow(0 0 6px var(--c-primary-glow));
+    color: #ffffff;
+    filter: none;
 }
-#reste-texte:checked ~ label > .aggrandir{
+#reste-texte:checked ~ label.btn-voir > .aggrandir{
     rotate: 135deg;
-    color: var(--c-accent);
+    color: #ffffff;
 }
-#reste-texte:checked ~ label > .btn-mot-voir{
-    color: var(--c-accent);
+#reste-texte:checked ~ label.btn-voir > .btn-mot-voir{
+    color: #ffffff;
+}
+#reste-texte:checked ~ label.btn-voir{
+    background: linear-gradient(135deg, var(--c-accent), var(--c-warm));
 }
 #reste-texte:checked ~ .description-moi{
     max-height: 100%;
@@ -683,6 +707,7 @@ main{
 .cours{
     width: 100%;
     height: auto;
+    min-height: 70px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -696,6 +721,13 @@ main{
     transition: all var(--t-base);
     position: relative;
     overflow: hidden;
+}
+.cours > .nom-cours{
+    flex: 1 1 auto;
+    min-width: 0;
+}
+.cours > .voir-description{
+    flex: 0 0 auto;
 }
 .cours::before{
     content: "";
@@ -727,43 +759,55 @@ main{
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: .5rem;
-    padding: .5rem 1rem;
-    background: var(--c-surface);
-    border: 1px solid var(--c-border-strong);
+    gap: .4rem;
+    padding: .55rem 1.1rem;
+    background: linear-gradient(135deg, var(--c-primary), var(--c-accent));
+    border: none;
     border-radius: 999px;
     cursor: pointer;
-    transition: all var(--t-base);
+    color: #ffffff;
+    box-shadow: 0 2px 12px var(--c-primary-glow);
+    transition: transform var(--t-base), box-shadow var(--t-base);
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 .voir-description:hover{
-    background: rgba(56, 189, 248, 0.1);
-    border-color: var(--c-primary);
+    transform: scale(1.05);
+    box-shadow: 0 4px 24px var(--c-primary-glow), 0 0 36px var(--c-accent-glow);
 }
 .voir-description > .mot-voir{
-    text-transform: full-width;
-    font-size: clamp(.85rem, 1.2vw, 2rem);
-    color: var(--c-primary);
-    transition: text-transform 500ms, color 500ms;
-    font-weight: 600;
+    text-transform: none;
+    font-size: clamp(.8rem, 1vw, .9rem);
+    color: #ffffff;
+    transition: color 300ms;
+    font-weight: 700;
+    letter-spacing: .5px;
 }
 .voir-description > .ouvrir{
     rotate: -90deg;
-    transition: rotate 500ms, color var(--t-fast);
-    color: var(--c-primary);
-    font-size: 1.3rem;
+    transition: rotate 500ms ease;
+    color: #ffffff;
+    font-size: 1.1rem;
+    filter: none;
+}
+#afficher-description1:checked ~ .ensemble-cours > .cours1 > .voir-description,
+#afficher-description2:checked ~ .ensemble-cours > .cours2 > .voir-description,
+#afficher-description3:checked ~ .ensemble-cours > .cours3 > .voir-description,
+#afficher-description4:checked ~ .ensemble-cours > .cours4 > .voir-description{
+    background: linear-gradient(135deg, var(--c-accent), var(--c-warm));
 }
 #afficher-description1:checked ~ .ensemble-cours > .cours1 > .voir-description > .ouvrir,
 #afficher-description2:checked ~ .ensemble-cours > .cours2 > .voir-description > .ouvrir,
 #afficher-description3:checked ~ .ensemble-cours > .cours3 > .voir-description > .ouvrir,
 #afficher-description4:checked ~ .ensemble-cours > .cours4 > .voir-description > .ouvrir{
     rotate: 90deg;
-    color: var(--c-accent);
+    color: #ffffff;
 }
 #afficher-description1:checked ~ .ensemble-cours > .cours1 > .voir-description > .mot-voir,
 #afficher-description2:checked ~ .ensemble-cours > .cours2 > .voir-description > .mot-voir,
 #afficher-description3:checked ~ .ensemble-cours > .cours3 > .voir-description > .mot-voir,
 #afficher-description4:checked ~ .ensemble-cours > .cours4 > .voir-description > .mot-voir{
-    color: var(--c-accent);
+    color: #ffffff;
     text-transform: none;
 }
 #afficher-description1:checked ~ .ensemble-cours > .cours1,
@@ -806,34 +850,44 @@ main{
 }
 
 .mesprojets{
-    width: 90vw;
-    height: 90vh;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    max-height: 70vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 1rem;
+    box-sizing: border-box;
 }
 .projet{
-    width: 90%;
+    width: 100%;
     height: 100%;
     display: flex;
     position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--c-border);
 }
 
 .descarres{
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 1fr;
+    place-items: center;
     position: absolute;
+    inset: 0;
     gap: .5rem;
     padding: 1rem;
+    box-sizing: border-box;
 }
 .forme-carre{
-    width: 14%;
-    height: 14%;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -846,7 +900,7 @@ main{
         0 0 12px rgba(56, 189, 248, 0.15),
         inset 0 0 12px rgba(56, 189, 248, 0.05);
     animation: changer-taille2 3s infinite alternate;
-    transition: box-shadow 400ms;
+    transition: box-shadow 400ms, transform 400ms;
 }
 .forme-carre:nth-child(even){
     background: rgba(167, 139, 250, 0.08);
