@@ -849,46 +849,86 @@ footer{
 }
 
 
-/*------------------------------ ANIMATION D'ARRIÈRE-PLAN ------------------------------ */
+/* ============================== ANIMATION D'ARRIÈRE-PLAN — AURORA + PARTICULES NÉON ============================== */
+/*
+ * Esthétique 2024-2025 : aurora boréale (multi radial-gradient géants qui dérivent
+ * et muent en couleur) en arrière-plan, sur laquelle se superposent des particules
+ * lumineuses en mix-blend-mode: plus-lighter (les couleurs s'additionnent dans les
+ * zones de chevauchement → effet "liquid light" caractéristique des UI modernes).
+ *
+ * 2 couches : #animation::before (aurora drift) + #animation > particules (80 spots).
+ */
+
 #animation{
     width: 100%;
     height: 100%;
     position: absolute;
+    inset: 0;
     z-index: -1;
-}
-/* ============================== ANIMATION D'ARRIÈRE-PLAN — ESTHÉTIQUE BOKEH/GLOW ============================== */
-/*
- * Approche : éléments en radial-gradient (effet bokeh photographique hors focus),
- * glow multi-couches via filter:drop-shadow, parallax 3 groupes de durées,
- * pulse subtil, trajectoires courbes. Aucun mix-blend-mode pour rester safe
- * sur tous les fonds.
- */
-
-#animation{
     isolation: isolate;
     pointer-events: none;
+    overflow: hidden;
 }
 
-.carrer, .cercle, .ligne1triangle, .ligne2triangle, .ligne1trapeze, .ligne2trapeze{
-    width: 1.5rem;
-    height: 1.5rem;
+/* COUCHE 1 — Aurora : 5 nuages colorés géants qui dérivent en boucle.
+   Ce sont les vrais "wow factor" — visibles depuis le premier coup d'œil. */
+#animation::before{
+    content: "";
     position: absolute;
-    opacity: .7;
+    inset: -20%;
+    background:
+        radial-gradient(ellipse 60vw 50vh at 15% 25%, rgba(56, 189, 248, 0.55), transparent 60%),
+        radial-gradient(ellipse 55vw 45vh at 85% 70%, rgba(167, 139, 250, 0.55), transparent 60%),
+        radial-gradient(ellipse 65vw 55vh at 50% 90%, rgba(244, 114, 182, 0.45), transparent 60%),
+        radial-gradient(ellipse 50vw 40vh at 75% 15%, rgba(251, 191, 36, 0.40), transparent 60%),
+        radial-gradient(ellipse 60vw 50vh at 25% 80%, rgba(99, 102, 241, 0.50), transparent 60%);
+    background-repeat: no-repeat;
+    filter: blur(40px) saturate(1.4);
+    animation: aurora-drift 28s cubic-bezier(.45, .05, .55, .95) infinite alternate;
+    will-change: transform, background-position;
+    z-index: -2;
+}
+
+@keyframes aurora-drift{
+    0%{
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        background-position: 0% 0%, 100% 100%, 50% 50%, 30% 70%, 70% 30%;
+    }
+    33%{
+        transform: translate(2vw, -3vh) rotate(3deg) scale(1.1);
+        background-position: 30% 10%, 70% 90%, 80% 20%, 50% 50%, 20% 80%;
+    }
+    66%{
+        transform: translate(-2vw, 2vh) rotate(-2deg) scale(1.05);
+        background-position: 60% 30%, 40% 60%, 20% 80%, 80% 20%, 50% 50%;
+    }
+    100%{
+        transform: translate(1vw, -1vh) rotate(1deg) scale(1.15);
+        background-position: 100% 50%, 0% 50%, 60% 0%, 0% 100%, 100% 0%;
+    }
+}
+
+/* COUCHE 2 — Particules : petits spots lumineux en blend-mode additif.
+   Les zones de chevauchement deviennent quasi-blanches → effet liquid light. */
+.carrer, .cercle, .ligne1triangle, .ligne2triangle, .ligne1trapeze, .ligne2trapeze{
+    width: 1.25rem;
+    height: 1.25rem;
+    position: absolute;
+    opacity: .85;
+    mix-blend-mode: plus-lighter;
     will-change: transform, opacity, filter;
 
-    /* Effet bokeh : la forme est un dégradé radial qui s'estompe en transparent.
-       Combiné avec les drop-shadow ci-dessous, ça donne un point lumineux
-       photographique au lieu d'un carré uni de couleur. */
-    background: radial-gradient(circle at 50% 50%, currentColor 0%, currentColor 35%, transparent 75%);
-    background-color: transparent !important; /* override le background-color animé */
+    /* Bokeh photographique — point de lumière hors focus */
+    background: radial-gradient(circle at 50% 50%, currentColor 0%, currentColor 30%, transparent 75%);
+    background-color: transparent !important;
 
-    /* Glow néon : 3 couches de drop-shadow successivement plus larges et plus diffuses
-       → halo doux qui suit toutes les transformations (translate, rotate, scale, clip-path). */
+    /* Glow extrême — 4 couches successivement plus larges (jusqu'à 100px de halo) */
     filter:
         blur(2px)
-        drop-shadow(0 0 12px currentColor)
-        drop-shadow(0 0 28px currentColor)
-        drop-shadow(0 0 60px currentColor);
+        drop-shadow(0 0 14px currentColor)
+        drop-shadow(0 0 36px currentColor)
+        drop-shadow(0 0 72px currentColor)
+        drop-shadow(0 0 100px currentColor);
 }
 
 /* Palette moderne : 5 teintes saturées harmonieuses (cool→warm→cool) */
