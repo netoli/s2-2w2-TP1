@@ -10,6 +10,57 @@ html {
     font-size: 18px;
     scroll-behavior: smooth;
 }
+
+/* ============================== UTILITY CLASSES (a11y) ============================== */
+.visually-hidden{
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.skip-link{
+    position: absolute;
+    top: -100px;
+    left: 1rem;
+    padding: .75rem 1.5rem;
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    z-index: 9999;
+    font-family: "Josefin Sans", sans-serif;
+    font-weight: 600;
+    transition: top 200ms ease;
+}
+.skip-link:focus{
+    top: 1rem;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+[tabindex="0"]:focus-visible,
+label[role="button"]:focus-visible,
+label[role="tab"]:focus-visible{
+    outline: 3px solid #ffd700;
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+
+@media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
 /* Ici, on définit la typographie par défaut des différentes lignes de texte contenues dans ces balises */
 h1, h2, h3, h4, h6, a, li{
     font-family: "Josefin Sans", sans-serif;
@@ -130,6 +181,9 @@ header{
     translate: 0 300%;
     opacity: 0;
     transition: opacity 1s, translate 500ms;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 .coordonnees{
     display: flex;
@@ -413,6 +467,9 @@ main{
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 .ensemble-def{
     width: 100%;
@@ -656,14 +713,23 @@ footer{
 }
 .rsociaux{
     display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
+.rsociaux > li{
+    display: inline-flex;
+}
+.rsociaux > li > a > img,
 .rsociaux > a > img{
     width: 2rem;
     height: 2rem;
     margin: 5px;
+    transition: scale 200ms ease;
 }
+.rsociaux > li > a > img:hover,
 .rsociaux > a > img:hover{
-    scale: 1.05;
+    scale: 1.1;
 }
 .infolettre{
     display: flex;
@@ -702,21 +768,28 @@ footer{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 .titre-section{
     font-size: clamp(1.5rem, 2vw, 9rem);
     font-weight: 600;
     margin-left: 3px;
 }
-.reprise-menu > ul > a{
-    text-decoration: none;
-}
-.reprise-menu > ul > a > li{
-    color: black;
-    font-size: clamp(1rem, 1.5vw, 9rem);
+.reprise-menu > ul > li{
     margin-top: 1.2rem;
 }
-.reprise-menu > ul > a > li:hover{
+.reprise-menu > ul > li > a,
+.reprise-menu > ul > a{
+    text-decoration: none;
+    color: black;
+    font-size: clamp(1rem, 1.5vw, 9rem);
+    display: inline-block;
+    transition: scale 200ms ease, color 200ms ease;
+}
+.reprise-menu > ul > li > a:hover,
+.reprise-menu > ul > a:hover{
     scale: 1.05;
     color: cadetblue;
 }
@@ -724,6 +797,25 @@ footer{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+#reprises-contact > li > a{
+    color: inherit;
+    text-decoration: none;
+    transition: color 200ms ease;
+}
+#reprises-contact > li > a:hover{
+    color: cadetblue;
+}
+.contact > li > a{
+    color: inherit;
+    text-decoration: none;
+    transition: color 200ms ease;
+}
+.contact > li > a:hover{
+    color: cadetblue;
 }
 .reprise-coordonnees{
     font-size: clamp(1rem, 1.5vw, 9rem);
@@ -1086,31 +1178,43 @@ footer{
 }
 
 
-/* Les animations par images clées pour les classes de div 'triangle' */
+/* Animations verticales — descentes/montées organiques avec oscillation et rotation */
 @keyframes deplacement-vertical-ligne1triangle{
-    from{
-        transform: translateY(-10vh);
-        animation-timing-function: cubic-bezier(1,0,1,1);
+    0%{
+        transform: translate(0, -10vh) rotate(0deg);
+        animation-timing-function: cubic-bezier(.45, .05, .55, .95);
     }
-    25%, 75%{
-        animation-timing-function: cubic-bezier(0,.5,0,.5);
+    25%{
+        transform: translate(2vw, 75vh) rotate(90deg);
     }
-    to{
-        transform: translateY(330vh);
-        animation-timing-function: cubic-bezier(1,0,1,0);
+    50%{
+        transform: translate(-2vw, 165vh) rotate(180deg);
+    }
+    75%{
+        transform: translate(2vw, 250vh) rotate(270deg);
+    }
+    100%{
+        transform: translate(0, 330vh) rotate(360deg);
+        animation-timing-function: cubic-bezier(.45, .05, .55, .95);
     }
 }
 @keyframes deplacement-vertical-ligne2triangle{
-    from{
-        transform: translateY(230vh);
-        animation-timing-function: cubic-bezier(1,0,1,1);
+    0%{
+        transform: translate(0, 230vh) rotate(0deg);
+        animation-timing-function: cubic-bezier(.45, .05, .55, .95);
     }
-    25%, 75%{
-        animation-timing-function: cubic-bezier(0,.5,0,.5);
+    25%{
+        transform: translate(-2vw, 105vh) rotate(-90deg);
     }
-    to{
-        transform: translateY(-270vh);
-        animation-timing-function: cubic-bezier(1,0,1,0);
+    50%{
+        transform: translate(2vw, -20vh) rotate(-180deg);
+    }
+    75%{
+        transform: translate(-2vw, -145vh) rotate(-270deg);
+    }
+    100%{
+        transform: translate(0, -270vh) rotate(-360deg);
+        animation-timing-function: cubic-bezier(.45, .05, .55, .95);
     }
 }
 @keyframes modification-forme-triangle{
@@ -1214,31 +1318,43 @@ footer{
 }
 
 
-/* Les animations par images clées pour les classes de div 'trapeze' */
+/* Trapèzes — mouvement vertical fluide avec dérive horizontale et rotation inverse */
 @keyframes deplacement-vertical-ligne1trapeze{
-    from{
-        transform: translateY(0);
-        animation-timing-function: cubic-bezier(.24,.71,.37,.85);
+    0%{
+        transform: translate(0, 0) rotate(0deg);
+        animation-timing-function: cubic-bezier(.4, 0, .2, 1);
     }
-    25%, 75%{
-        animation-timing-function: cubic-bezier(1,0,1,1);
+    25%{
+        transform: translate(-1.5vw, 80vh) rotate(-45deg);
     }
-    to{
-        transform: translateY(330vh);
-        animation-timing-function: cubic-bezier(0,.5,0,.5);
+    50%{
+        transform: translate(1.5vw, 165vh) rotate(-90deg);
+    }
+    75%{
+        transform: translate(-1.5vw, 250vh) rotate(-135deg);
+    }
+    100%{
+        transform: translate(0, 330vh) rotate(-180deg);
+        animation-timing-function: cubic-bezier(.4, 0, .2, 1);
     }
 }
 @keyframes deplacement-vertical-ligne2trapeze{
-    from{
-        transform: translateY(600vh);
-        animation-timing-function: cubic-bezier(.24,.71,.37,.85);
+    0%{
+        transform: translate(0, 600vh) rotate(0deg);
+        animation-timing-function: cubic-bezier(.4, 0, .2, 1);
     }
-    25%, 75%{
-        animation-timing-function: cubic-bezier(1,0,1,1);
+    25%{
+        transform: translate(2vw, 425vh) rotate(45deg);
     }
-    to{
-        transform: translateY(-100vh);
-        animation-timing-function: cubic-bezier(0,.5,0,.5);
+    50%{
+        transform: translate(-2vw, 250vh) rotate(90deg);
+    }
+    75%{
+        transform: translate(2vw, 75vh) rotate(135deg);
+    }
+    100%{
+        transform: translate(0, -100vh) rotate(180deg);
+        animation-timing-function: cubic-bezier(.4, 0, .2, 1);
     }
 }
 @keyframes modification-forme-trapeze{
