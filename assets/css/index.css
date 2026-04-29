@@ -2003,88 +2003,90 @@ le menu de navigation du bouton burger */
     }
 }
 
-/*------------------------------ MÉDIAS QUERY POUR UNE TAILLE MINIMUM DU VIEWPORT ------------------------------ */
-/* Ici, les modifications sont apportées une fois que le viewport attiegne la largeur minimum de 576px */
-@media (min-width: 576px){
+/* ============================== DESKTOP — 768px et + ============================== */
+/* Refonte propre : navigation horizontale dans le header, burger caché,
+   sections Moi/Formations/Réalisations gardent leur layout grid déjà défini
+   au niveau base. Aucune surcharge "width: 30%/45%/50%" qui cassaient le rendu. */
+@media (min-width: 768px){
+
+    /* La barre navigation prend tout l'espace dispo dans le header */
     .barre-navigation{
-        width: 30vw;
+        flex: 1;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-end;
+        gap: 1rem;
     }
+
+    /* Navigation : panneau fixe → liste horizontale inline dans le header.
+       !important pour battre la spécificité du sélecteur #bouton-menu-burger:checked
+       qui pourrait sinon imposer width: 100vw même en desktop. */
     .navigation{
-        flex-direction: row;
+        position: static !important;
+        flex-direction: row !important;
         align-items: center;
-        justify-content: center;
-        height: 0;
-        background-color: transparent;
-        position: static;
-        translate: 0;
-        opacity: 1;
+        justify-content: flex-end;
+        gap: .5rem;
+        width: auto !important;
+        height: auto !important;
+        background: transparent !important;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border-left: none;
+        opacity: 1 !important;
+        translate: 0 !important;
+        transition: none;
     }
+
+    /* Menus : pills compactes sans gradient persistant — soulignement animé au hover */
     .menu{
-        background-color: transparent;
-        translate: 0 0;
-        opacity: 1;
-        flex-grow: 1;
-        margin: 0.5rem;
+        position: relative;
+        width: auto !important;
+        height: auto !important;
+        padding: .5rem 1.25rem;
+        background: transparent !important;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        opacity: 1 !important;
+        translate: 0 !important;
+        font-size: clamp(.9rem, 1.1vw, 1rem);
+        color: var(--c-text);
+        font-weight: 500;
+        margin: 0;
+        transition: color 250ms ease, border-color 250ms ease, background 250ms ease;
+    }
+    /* On désactive le ::before gradient en desktop (visible uniquement en panneau mobile) */
+    .menu::before{
+        display: none;
+    }
+    .menu::after{
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 4px;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--c-primary), var(--c-warm));
+        transform: translateX(-50%);
+        transition: width 300ms ease;
     }
     .menu:hover{
-        filter: drop-shadow(1px 1px 0 black);
-        color: white;
-        font-weight: 450;
+        color: var(--c-primary);
+        background: var(--c-surface-strong);
+        border-color: var(--c-border);
+        transform: none;
+        box-shadow: none;
     }
-    .menu::before{
-        content: "";
-        bottom: 0;
-        position: absolute;
-        width: 100%;
-        height: 2px;
-        background: white;
-        transform: scaleX(0);
-        transition: all 0.5s ease;
+    .menu:hover::after{
+        width: 50%;
     }
-    .menu:hover::before{
-        transform: scaleX(1);
-    }
-    .contact{
-        display: none;
-    }
-    .coordonnees{
-        display: none;
-    }
+
+    /* Coordonnées et burger : cachés en desktop (présents dans le panneau mobile uniquement) */
+    .contact,
+    .coordonnees,
     .bouton{
         display: none;
     }
-    .mescours{
-        height: 80%;
-        flex-direction: row;
-    }
-    .ensemble-cours{
-        width: 45%;
-        height: 100%;
-    }
-    .ensemble-def{
-        width: 50%;
-        height: 100%;
-    }
-    .cours{
-        flex-direction: row;
-    }
-    .voir-description{
-        width: 30%;
-        height: 100%;
-    }
-    .nom-cours{
-        margin: 0;
-    }
-    .voir-description > .ouvrir{
-        rotate: -180deg;
-        font-size: 2rem;
-    }
-    #afficher-description1:checked ~ .ensemble-cours > .cours1 > .voir-description > .ouvrir,
-    #afficher-description2:checked ~ .ensemble-cours > .cours2 > .voir-description > .ouvrir,
-    #afficher-description3:checked ~ .ensemble-cours > .cours3 > .voir-description > .ouvrir,
-    #afficher-description4:checked ~ .ensemble-cours > .cours4 > .voir-description > .ouvrir{
-    rotate: 0deg;
-}
+
+    /* Section Formations : ne pas surcharger le grid 2 cols déjà défini.
+       On laisse le base CSS gérer (grid-template-columns: minmax(280px, 1fr) 1.5fr) */
 }
