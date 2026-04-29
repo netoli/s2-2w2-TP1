@@ -1,9 +1,10 @@
 /*============================== DESIGN SYSTEM — VARIABLES DE THÈME ============================== */
-:root{
+:root,
+:root[data-theme="dark"]{
     /* Couleurs principales — palette sombre moderne avec accents néon */
     --c-bg: #0a0a14;                /* fond profond presque noir */
     --c-bg-2: #131325;              /* surface secondaire */
-    --c-surface: rgba(255, 255, 255, 0.04);   /* glass card de base */
+    --c-surface: rgba(255, 255, 255, 0.04);
     --c-surface-strong: rgba(255, 255, 255, 0.08);
     --c-border: rgba(255, 255, 255, 0.10);
     --c-border-strong: rgba(255, 255, 255, 0.18);
@@ -12,11 +13,14 @@
     --c-text-muted: rgba(241, 245, 249, 0.7);
     --c-text-subtle: rgba(241, 245, 249, 0.5);
 
-    --c-primary: #38bdf8;           /* sky-400 — accent principal */
+    --c-primary: #38bdf8;           /* sky-400 */
     --c-primary-glow: rgba(56, 189, 248, .45);
     --c-accent: #a78bfa;            /* violet-400 */
     --c-accent-glow: rgba(167, 139, 250, .45);
     --c-warm: #fbbf24;              /* amber-400 */
+
+    /* Card overlay — fond opaque DERRIÈRE le glass pour le contraste texte */
+    --c-card-bg: rgba(10, 10, 20, 0.55);
 
     /* Effets */
     --shadow-glow: 0 0 24px rgba(56, 189, 248, .35), 0 0 60px rgba(167, 139, 250, .2);
@@ -26,6 +30,42 @@
     --blur-glass: 16px;
     --t-fast: 200ms ease;
     --t-base: 350ms cubic-bezier(.45, .05, .55, .95);
+}
+
+/* Mode clair — palette douce avec mêmes accents néon, plus contrasté */
+:root[data-theme="light"]{
+    --c-bg: #f5f5f7;
+    --c-bg-2: #ebebf0;
+    --c-surface: rgba(255, 255, 255, 0.55);
+    --c-surface-strong: rgba(255, 255, 255, 0.75);
+    --c-border: rgba(15, 23, 42, 0.08);
+    --c-border-strong: rgba(15, 23, 42, 0.15);
+
+    --c-text: #0f172a;              /* slate-900 */
+    --c-text-muted: rgba(15, 23, 42, 0.7);
+    --c-text-subtle: rgba(15, 23, 42, 0.5);
+
+    --c-primary: #0284c7;           /* sky-600 — plus saturé pour le clair */
+    --c-primary-glow: rgba(2, 132, 199, .35);
+    --c-accent: #7c3aed;            /* violet-600 */
+    --c-accent-glow: rgba(124, 58, 237, .35);
+    --c-warm: #d97706;
+
+    --c-card-bg: rgba(255, 255, 255, 0.65);
+
+    --shadow-card: 0 8px 32px rgba(15, 23, 42, 0.08), 0 1px 0 rgba(255, 255, 255, 0.6) inset;
+}
+
+/* Transitions douces lors du switch de thème */
+html, body, header, main > section, .menu, .cours, .ensemble-def,
+.btn-voir, .voir-description, .infolettre input, #btninscrire,
+.btn-retour-haut, .theme-toggle{
+    transition:
+        background-color 400ms ease,
+        background 400ms ease,
+        color 400ms ease,
+        border-color 400ms ease,
+        box-shadow 400ms ease;
 }
 
 /*============================== PARAMÉTRAGE DE STYLE GÉNÉRAL PAR DÉFAUT ============================== */
@@ -39,11 +79,13 @@ html {
     height: 100vh;
     font-size: 18px;
     scroll-behavior: smooth;
+    background: var(--c-bg);
 }
 body{
-    background: var(--c-bg);
+    background: transparent;
     color: var(--c-text);
     overflow-x: hidden;
+    position: relative;
 }
 
 /* ============================== UTILITY CLASSES (a11y) ============================== */
@@ -133,14 +175,51 @@ header{
     align-items: center;
     justify-content: space-between;
     padding: 0 1.5rem;
-    background: rgba(10, 10, 20, 0.6);
+    background: var(--c-card-bg);
     backdrop-filter: blur(var(--blur-glass)) saturate(1.5);
     -webkit-backdrop-filter: blur(var(--blur-glass)) saturate(1.5);
     border-bottom: 1px solid var(--c-border);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 4px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 4px 30px rgba(0, 0, 0, 0.2);
     position: sticky;
     top: 0;
     z-index: 3;
+}
+
+/* Bouton toggle dark/light */
+.theme-toggle{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    margin-left: auto;
+    margin-right: .75rem;
+    background: var(--c-surface-strong);
+    border: 1px solid var(--c-border-strong);
+    border-radius: 50%;
+    cursor: pointer;
+    color: var(--c-primary);
+    transition: all var(--t-base);
+}
+.theme-toggle:hover{
+    border-color: var(--c-primary);
+    background: rgba(56, 189, 248, 0.1);
+    box-shadow: 0 0 16px var(--c-primary-glow);
+    transform: scale(1.05);
+}
+.theme-toggle:active{
+    transform: scale(.95);
+}
+.theme-toggle .theme-toggle-icon{
+    font-size: 1.4rem;
+    color: var(--c-primary);
+    margin: 0;
+    filter: drop-shadow(0 0 6px var(--c-primary-glow));
+    transition: transform 400ms ease, color 200ms ease;
+}
+:root[data-theme="light"] .theme-toggle .theme-toggle-icon{
+    transform: rotate(360deg);
 }
 
 /* Ici, on définit le style des contenus pour mon profil*/
@@ -189,7 +268,7 @@ header{
     justify-content: center;
     width: 0;
     height: 100vh;
-    background: rgba(10, 10, 20, 0.85);
+    background: var(--c-card-bg);
     backdrop-filter: blur(20px) saturate(1.5);
     -webkit-backdrop-filter: blur(20px) saturate(1.5);
     border-left: 1px solid var(--c-border);
@@ -343,11 +422,10 @@ main{
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    background:
-        radial-gradient(ellipse 80vw 60vh at 50% 0%, rgba(56, 189, 248, 0.06), transparent 70%),
-        radial-gradient(ellipse 80vw 60vh at 50% 100%, rgba(167, 139, 250, 0.06), transparent 70%),
-        linear-gradient(180deg, var(--c-bg) 0%, var(--c-bg-2) 50%, var(--c-bg) 100%);
+    background: transparent;
     color: var(--c-text);
+    position: relative;
+    z-index: 1;
 }
 #moi, #formations, #realisations{
     width: min(92vw, 1280px);
@@ -357,22 +435,19 @@ main{
     align-items: center;
     justify-content: center;
     position: relative;
-    background: var(--c-surface);
-    backdrop-filter: blur(var(--blur-glass)) saturate(1.2);
-    -webkit-backdrop-filter: blur(var(--blur-glass)) saturate(1.2);
+    z-index: 1;
+    background: var(--c-card-bg);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
     border: 1px solid var(--c-border);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-card);
     margin: 4rem auto;
     padding: 3rem 2rem;
-    transition: border-color var(--t-base), box-shadow var(--t-base);
 }
 #moi:hover, #formations:hover, #realisations:hover{
     border-color: var(--c-border-strong);
-    box-shadow: var(--shadow-card), 0 0 60px rgba(56, 189, 248, 0.08);
-}
-#moi, #formations{
-    border-bottom: 1px solid var(--c-border);
+    box-shadow: var(--shadow-card), 0 0 60px var(--c-primary-glow);
 }
 .titre{
     width: 100vw;
@@ -498,12 +573,21 @@ main{
 }
 .description-moi{
     max-height: 10%;
-    margin: 24px;
-    font-size: clamp(0.75rem, 1.4vw, 3rem);
+    margin: 1.5rem auto;
+    max-width: 720px;
+    font-size: clamp(0.85rem, 1.2vw, 1.1rem);
     overflow: hidden;
     transition: max-height 500ms;
-    color: var(--c-text-muted);
-    line-height: 1.7;
+    color: var(--c-text);
+    line-height: 1.8;
+    text-align: center;
+    padding: 0 1rem;
+}
+.description-moi p,
+.description-moi h3{
+    color: var(--c-text);
+    font-weight: 400;
+    font-family: "Josefin Sans", sans-serif;
 }
 .btn-voir{
     display: inline-flex;
@@ -548,55 +632,96 @@ main{
     max-height: 100%;
 }
 .mescours{
-    width: 90%;
-    height: 84%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+    width: 100%;
+    max-width: 1100px;
+    display: grid;
+    grid-template-columns: minmax(280px, 1fr) 1.5fr;
+    gap: 1.5rem;
+    align-items: stretch;
+    padding: 1rem;
+}
+@media (max-width: 768px){
+    .mescours{
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
 }
 .ensemble-cours{
-    width: 100%;
-    height: 45%;
     display: flex;
-    justify-content: space-between;
     flex-direction: column;
+    gap: .75rem;
     list-style: none;
     padding: 0;
     margin: 0;
+    height: auto;
+    width: auto;
 }
 .ensemble-def{
     width: 100%;
-    height: 50%;
-    background: var(--c-surface);
+    min-height: 240px;
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--c-border);
     border-radius: var(--radius-md);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+.ensemble-def::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--c-primary), var(--c-accent), transparent);
 }
 .cours{
     width: 100%;
-    height: 20%;
+    height: auto;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 0 1.5rem;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
     background: var(--c-surface-strong);
     border: 1px solid var(--c-border);
     border-radius: var(--radius-md);
-    margin-bottom: .5rem;
+    margin: 0;
     transition: all var(--t-base);
+    position: relative;
+    overflow: hidden;
+}
+.cours::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--c-primary), var(--c-accent));
+    opacity: 0;
+    transition: opacity var(--t-base);
 }
 .cours:hover{
     border-color: var(--c-primary);
     box-shadow: 0 0 24px var(--c-primary-glow);
     transform: translateX(4px);
+    background: rgba(56, 189, 248, 0.06);
+}
+.cours:hover::before{
+    opacity: 1;
 }
 .nom-cours{
-    font-size: clamp(1rem, 1.5vw, 9rem);
+    font-size: clamp(.95rem, 1.2vw, 1.1rem);
     color: var(--c-text);
     font-weight: 500;
+    line-height: 1.3;
 }
 .voir-description{
     display: inline-flex;
@@ -646,7 +771,14 @@ main{
 #afficher-description3:checked ~ .ensemble-cours > .cours3,
 #afficher-description4:checked ~ .ensemble-cours > .cours4{
     border-color: var(--c-accent);
-    background: rgba(167, 139, 250, 0.08);
+    background: rgba(167, 139, 250, 0.12);
+    box-shadow: 0 0 24px var(--c-accent-glow);
+}
+#afficher-description1:checked ~ .ensemble-cours > .cours1::before,
+#afficher-description2:checked ~ .ensemble-cours > .cours2::before,
+#afficher-description3:checked ~ .ensemble-cours > .cours3::before,
+#afficher-description4:checked ~ .ensemble-cours > .cours4::before{
+    opacity: 1;
 }
 #afficher-description1:checked ~ .ensemble-def > .description-cours1,
 #afficher-description2:checked ~ .ensemble-def > .description-cours2,
@@ -656,15 +788,21 @@ main{
     display: block;
 }
 .description-cours{
-    width: 90%;
+    width: 100%;
     height: 100%;
-    margin: 1rem;
+    margin: 0;
     display: none;
     transition: display 500ms;
-    text-align: center;
-    color: var(--c-text-muted);
-    line-height: 1.7;
-    padding: 1.5rem;
+    text-align: left;
+    color: var(--c-text);
+    line-height: 1.8;
+    padding: 0;
+    font-size: clamp(.85rem, 1vw, 1rem);
+}
+.description-cours p{
+    color: var(--c-text);
+    font-family: "Josefin Sans", sans-serif;
+    font-weight: 300;
 }
 
 .mesprojets{
@@ -690,19 +828,39 @@ main{
     justify-content: space-between;
     flex-wrap: wrap;
     position: absolute;
+    gap: .5rem;
+    padding: 1rem;
 }
 .forme-carre{
-    width: 15%;
-    height: 15%;
+    width: 14%;
+    height: 14%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: coral;
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow:
+        0 0 12px rgba(56, 189, 248, 0.15),
+        inset 0 0 12px rgba(56, 189, 248, 0.05);
     animation: changer-taille2 3s infinite alternate;
+    transition: box-shadow 400ms;
 }
 .forme-carre:nth-child(even){
-    background-color: cadetblue;
+    background: rgba(167, 139, 250, 0.08);
+    border-color: rgba(167, 139, 250, 0.3);
+    box-shadow:
+        0 0 12px rgba(167, 139, 250, 0.15),
+        inset 0 0 12px rgba(167, 139, 250, 0.05);
     animation: changer-taille1 3s infinite alternate;
+}
+.forme-carre:hover{
+    box-shadow:
+        0 0 32px rgba(56, 189, 248, 0.5),
+        inset 0 0 16px rgba(56, 189, 248, 0.15);
+    transform: scale(1.1);
 }
 
 #position1, #position2, #position3, #position4{
@@ -714,9 +872,11 @@ main{
     animation: couleur-perspective 3s 300ms infinite alternate;
 }
 .verticale-h, .verticale-b, .horizontale-g, .horizontale-d{
-    width: 0.5rem;
-    height: 6rem;
-    background-color: cadetblue;
+    width: 0.4rem;
+    height: 5rem;
+    background: linear-gradient(180deg, var(--c-primary), var(--c-accent));
+    border-radius: 999px;
+    box-shadow: 0 0 12px var(--c-primary-glow), 0 0 24px var(--c-accent-glow);
 }
 .horizontale-d, .horizontale-g{
     rotate: 90deg;
@@ -744,9 +904,10 @@ main{
     }
     100%{
         opacity: 1;
-        height: 9rem;
-        background-color: brown;
-        border-radius: 50%;
+        height: 8rem;
+        background: linear-gradient(180deg, var(--c-warm), var(--c-primary));
+        box-shadow: 0 0 18px var(--c-primary-glow), 0 0 36px rgba(251, 191, 36, .4);
+        border-radius: 999px;
         animation-timing-function: cubic-bezier(0,1,1,0);
     }
 }
@@ -757,7 +918,8 @@ main{
         animation-timing-function: cubic-bezier(0,0,0,1);
     }
     100%{
-        background-color: brown;
+        background: linear-gradient(180deg, var(--c-accent), var(--c-warm));
+        box-shadow: 0 0 18px var(--c-accent-glow);
         transform: rotate3d(-2, -2, -2, 540deg);
         animation-timing-function: cubic-bezier(0,1,0,1);
     }
@@ -926,11 +1088,11 @@ footer::before{
     width: auto;
     padding: .55rem 1.5rem;
     height: auto;
-    border: 1px solid var(--c-primary);
+    border: none;
     border-radius: 8px;
     cursor: pointer;
     background: linear-gradient(135deg, var(--c-primary), var(--c-accent));
-    color: #0a0a14;
+    color: #ffffff;
     font-size: .85rem;
     font-weight: 700;
     text-align: center;
@@ -941,7 +1103,7 @@ footer::before{
 #btninscrire:hover{
     scale: 1.05;
     box-shadow: 0 0 32px var(--c-primary-glow), 0 0 64px var(--c-accent-glow);
-    color: #0a0a14;
+    color: #ffffff;
 }
 .reprise-menu > ul{
     display: flex;
@@ -1051,10 +1213,10 @@ footer::before{
  */
 
 #animation{
-    width: 100%;
-    height: 100%;
-    position: absolute;
+    position: fixed;
     inset: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: -1;
     isolation: isolate;
     pointer-events: none;
@@ -1120,6 +1282,27 @@ footer::before{
         drop-shadow(0 0 36px currentColor)
         drop-shadow(0 0 72px currentColor)
         drop-shadow(0 0 100px currentColor);
+}
+
+/* Mode clair : passer en multiply pour effet aquarelle au lieu d'effet néon plus-lighter */
+:root[data-theme="light"] .carrer,
+:root[data-theme="light"] .cercle,
+:root[data-theme="light"] .ligne1triangle,
+:root[data-theme="light"] .ligne2triangle,
+:root[data-theme="light"] .ligne1trapeze,
+:root[data-theme="light"] .ligne2trapeze{
+    mix-blend-mode: multiply;
+    opacity: .55;
+    filter:
+        blur(3px)
+        drop-shadow(0 0 12px currentColor)
+        drop-shadow(0 0 28px currentColor);
+}
+
+/* Mode clair : aurora plus subtile pour ne pas saturer le fond clair */
+:root[data-theme="light"] #animation::before{
+    opacity: .55;
+    filter: blur(50px) saturate(1.2);
 }
 
 /* Palette moderne : 5 teintes saturées harmonieuses (cool→warm→cool) */
