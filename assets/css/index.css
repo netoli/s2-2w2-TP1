@@ -856,101 +856,136 @@ footer{
     position: absolute;
     z-index: -1;
 }
+/* ============================== ANIMATION D'ARRIÈRE-PLAN — ESTHÉTIQUE BOKEH/GLOW ============================== */
+/*
+ * Approche : éléments en radial-gradient (effet bokeh photographique hors focus),
+ * glow multi-couches via filter:drop-shadow, parallax 3 groupes de durées,
+ * pulse subtil, trajectoires courbes. Aucun mix-blend-mode pour rester safe
+ * sur tous les fonds.
+ */
+
+#animation{
+    isolation: isolate;
+    pointer-events: none;
+}
+
 .carrer, .cercle, .ligne1triangle, .ligne2triangle, .ligne1trapeze, .ligne2trapeze{
-    width: 1rem;
-    height: 1rem;
+    width: 1.5rem;
+    height: 1.5rem;
     position: absolute;
-    opacity: .55;
-    will-change: transform, opacity;
-}
+    opacity: .7;
+    will-change: transform, opacity, filter;
 
-/* Animations communes — durées rallongées + courbes adoucies pour mouvement plus organique */
-@keyframes changement-taille{
-    0%{
-        scale: 0.2;
-    }
-    50%{
-        scale: 0.7;
-    }
-    100%{
-        scale: 0.5;
-    }
-}
+    /* Effet bokeh : la forme est un dégradé radial qui s'estompe en transparent.
+       Combiné avec les drop-shadow ci-dessous, ça donne un point lumineux
+       photographique au lieu d'un carré uni de couleur. */
+    background: radial-gradient(circle at 50% 50%, currentColor 0%, currentColor 35%, transparent 75%);
+    background-color: transparent !important; /* override le background-color animé */
 
-/* Palette unifiée bleu→cyan→violet→ambre — transitions douces sans contraste agressif */
-@keyframes changement-couleur{
-    0%{
-        background-color: #38bdf8;       /* sky-400 */
-    }
-    25%{
-        background-color: #22d3ee;       /* cyan-400 */
-    }
-    50%{
-        background-color: #a78bfa;       /* violet-400 */
-    }
-    75%{
-        background-color: #fbbf24;       /* amber-400 */
-    }
-    100%{
-        background-color: #6366f1;       /* indigo-500 */
-    }
-}
-
-/* Effet de traînée — halos lumineux empilés en filter:drop-shadow (suivent les transformations) */
-.carrer, .cercle, .ligne1triangle, .ligne2triangle, .ligne1trapeze, .ligne2trapeze{
+    /* Glow néon : 3 couches de drop-shadow successivement plus larges et plus diffuses
+       → halo doux qui suit toutes les transformations (translate, rotate, scale, clip-path). */
     filter:
-        blur(6px)
-        drop-shadow(0 0 8px currentColor)
-        drop-shadow(0 0 18px currentColor);
+        blur(2px)
+        drop-shadow(0 0 12px currentColor)
+        drop-shadow(0 0 28px currentColor)
+        drop-shadow(0 0 60px currentColor);
 }
 
+/* Palette moderne : 5 teintes saturées harmonieuses (cool→warm→cool) */
+@keyframes changement-couleur{
+    0%   { color: #38bdf8; }   /* sky-400 */
+    20%  { color: #22d3ee; }   /* cyan-400 */
+    40%  { color: #a78bfa; }   /* violet-400 */
+    60%  { color: #f472b6; }   /* pink-400 */
+    80%  { color: #fbbf24; }   /* amber-400 */
+    100% { color: #6366f1; }   /* indigo-500 */
+}
+
+/* Pulse — respiration discrète qui anime même quand l'élément est statique en trajectoire */
+@keyframes changement-taille{
+    0%   { scale: 0.4; }
+    50%  { scale: 0.85; }
+    100% { scale: 0.55; }
+}
+
+/* ===== Parallax 3 groupes : chaque type de forme a 3 vitesses différentes ===== */
+
+/* Carrés (gauche → droite) */
 .carrer{
     left: 0;
+    color: #38bdf8;
     animation:
-        deplacement-carre-horizontal 24s 500ms infinite alternate cubic-bezier(.45, .05, .55, .95),
-        modification-forme-carre 14s 500ms infinite alternate ease-in-out,
-        changement-couleur 12s 500ms infinite alternate ease-in-out,
-        changement-taille 14s infinite alternate ease-in-out;
+        deplacement-carre-horizontal 28s 500ms infinite alternate cubic-bezier(.37, 0, .63, 1),
+        modification-forme-carre 18s 500ms infinite alternate ease-in-out,
+        changement-couleur 16s 500ms infinite alternate ease-in-out,
+        changement-taille 11s infinite alternate ease-in-out;
 }
+.carre1, .carre4, .carre7, .carre10, .carre13, .carre16, .carre19{
+    animation-duration: 36s, 22s, 20s, 14s; /* groupe lent — gros bokeh d'arrière-plan */
+}
+.carre2, .carre5, .carre8, .carre11, .carre14, .carre17, .carre20{
+    animation-duration: 24s, 16s, 14s, 9s;  /* groupe rapide — bokeh proche */
+}
+
+/* Cercles (droite → gauche) */
 .cercle{
     right: 0;
+    color: #22d3ee;
     animation:
-        deplacement-cercle-horizontal 24s 500ms infinite alternate cubic-bezier(.45, .05, .55, .95),
-        modification-forme-cercle 14s 500ms infinite alternate ease-in-out,
-        changement-couleur 12s 500ms infinite alternate ease-in-out,
-        changement-taille 14s infinite alternate ease-in-out;
+        deplacement-cercle-horizontal 30s 500ms infinite alternate cubic-bezier(.37, 0, .63, 1),
+        modification-forme-cercle 18s 500ms infinite alternate ease-in-out,
+        changement-couleur 16s 500ms infinite alternate ease-in-out,
+        changement-taille 11s infinite alternate ease-in-out;
 }
+.cercle1, .cercle4, .cercle7, .cercle10, .cercle13, .cercle16, .cercle19{
+    animation-duration: 38s, 22s, 20s, 14s;
+}
+.cercle2, .cercle5, .cercle8, .cercle11, .cercle14, .cercle17, .cercle20{
+    animation-duration: 26s, 16s, 14s, 9s;
+}
+
+/* Triangles (descendent ↓) */
 .ligne1triangle{
     top: 0;
+    color: #a78bfa;
     animation:
-        changement-taille 18s infinite alternate ease-in-out,
-        changement-couleur 12s infinite alternate ease-in-out,
-        modification-forme-triangle 14s infinite alternate ease-in-out,
-        deplacement-vertical-ligne1triangle 32s 500ms infinite alternate cubic-bezier(.45, .05, .55, .95);
+        changement-taille 13s infinite alternate ease-in-out,
+        changement-couleur 16s infinite alternate ease-in-out,
+        modification-forme-triangle 18s infinite alternate ease-in-out,
+        deplacement-vertical-ligne1triangle 38s 500ms infinite alternate cubic-bezier(.37, 0, .63, 1);
 }
+
+/* Triangles (montent ↑) */
 .ligne2triangle{
     bottom: 0;
+    color: #f472b6;
     animation:
-        changement-taille 18s infinite alternate ease-in-out,
-        changement-couleur 12s infinite alternate ease-in-out,
-        modification-forme-triangle 14s infinite alternate ease-in-out,
-        deplacement-vertical-ligne2triangle 32s 500ms infinite alternate cubic-bezier(.45, .05, .55, .95);
+        changement-taille 13s infinite alternate ease-in-out,
+        changement-couleur 16s infinite alternate ease-in-out,
+        modification-forme-triangle 18s infinite alternate ease-in-out,
+        deplacement-vertical-ligne2triangle 38s 500ms infinite alternate cubic-bezier(.37, 0, .63, 1);
 }
+
+/* Trapèzes (descendent ↓) */
 .ligne1trapeze{
     top: 0;
+    color: #fbbf24;
     animation:
-        changement-taille 18s infinite alternate ease-in-out,
-        modification-forme-trapeze 4s infinite alternate ease-in-out,
-        changement-couleur 12s infinite alternate ease-in-out,
-        deplacement-vertical-ligne1trapeze 32s 500ms infinite alternate cubic-bezier(.45, .05, .55, .95);
+        changement-taille 13s infinite alternate ease-in-out,
+        modification-forme-trapeze 6s infinite alternate ease-in-out,
+        changement-couleur 16s infinite alternate ease-in-out,
+        deplacement-vertical-ligne1trapeze 42s 500ms infinite alternate cubic-bezier(.37, 0, .63, 1);
 }
+
+/* Trapèzes (montent ↑) */
 .ligne2trapeze{
     bottom: 0;
+    color: #6366f1;
     animation:
-        changement-taille 18s infinite alternate ease-in-out,
-        modification-forme-trapeze 4s infinite alternate ease-in-out,
-        changement-couleur 12s infinite alternate ease-in-out,
-        deplacement-vertical-ligne2trapeze 32s 500ms infinite alternate cubic-bezier(.45, .05, .55, .95);
+        changement-taille 13s infinite alternate ease-in-out,
+        modification-forme-trapeze 6s infinite alternate ease-in-out,
+        changement-couleur 16s infinite alternate ease-in-out,
+        deplacement-vertical-ligne2trapeze 42s 500ms infinite alternate cubic-bezier(.37, 0, .63, 1);
 }
 
 
